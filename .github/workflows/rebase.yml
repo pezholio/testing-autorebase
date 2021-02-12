@@ -26,8 +26,7 @@ jobs:
         if: ${{ failure() }}
         uses: peter-evans/create-or-update-comment@v1
         issue-number: ${{ github.event.issue.id }}
-          body: |
-            Automatic rebasing for this issue has failed :disappointed:
+        body: |
+          Automatic rebasing for this issue has failed :disappointed:
 
-            You'll have to rebase this one manually, I'm afraid.
-
+          You'll have to rebase this one manually, I'm afraid.
