@@ -23,11 +23,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
       - name: Send failure message
-        if: ${{ failure() }}
         uses: peter-evans/create-or-update-comment@v1
         with:
-          issue-number: ${{ github.event.issue.id }}
+          issue-number: ${{ github.event.issue.number }}
           body: |
             Automatic rebasing for this issue has failed :disappointed:
 
             You'll have to rebase this one manually, I'm afraid.
+        if: ${{ failure() }}
