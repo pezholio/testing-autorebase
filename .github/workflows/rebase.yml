@@ -16,7 +16,7 @@ jobs:
           body: |
             To automatically rebase, you need to add a personal access token with the name `PERSONAL_ACCESS_TOKEN`
             to the [secrets section of this repo](https://github.com/${{ github.event.repository.full_name }}/settings/secrets/actions).
-        if: ${{ secrets.PERSONAL_ACCESS_TOKEN != '' }}
+        if: ${{ env.PERSONAL_ACCESS_TOKEN != '' }}
   reaction:
     needs: check_token
     runs-on: ubuntu-latest
