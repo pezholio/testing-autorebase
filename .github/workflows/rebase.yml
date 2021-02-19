@@ -16,16 +16,13 @@ jobs:
           body: |
             To automatically rebase, you need to add a personal access token with the name `PERSONAL_ACCESS_TOKEN`
             to the [secrets section of this repo](https://github.com/${{ github.event.repository.full_name }}/settings/secrets/actions).
-        if: ${{ env.PERSONAL_ACCESS_TOKEN != '' }}
-  reaction:
-    needs: check_token
-    runs-on: ubuntu-latest
-    steps:
+        if: ${{ env.PERSONAL_ACCESS_TOKEN == '' }}
       - name: Add reaction
         uses: peter-evans/create-or-update-comment@v1
         with:
           comment-id: ${{ github.event.comment.id }}
           reactions: "+1"
+        if: ${{ env.PERSONAL_ACCESS_TOKEN != '' }}
   rebase:
     name: Rebase
     needs: check_token
