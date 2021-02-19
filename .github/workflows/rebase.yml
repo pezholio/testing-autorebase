@@ -2,6 +2,8 @@ name: Automatic Rebase
 on:
   issue_comment:
     types: [created]
+env:
+  GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
 jobs:
   reaction:
     if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')
@@ -20,12 +22,12 @@ jobs:
       - name: Checkout the latest code
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          token: env.GH_ACCESS_TOKEN
           fetch-depth: 0
       - name: Automatic Rebase
         uses: cirrus-actions/rebase@1.4
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+          GITHUB_TOKEN: env.GH_ACCESS_TOKEN
       - name: Send failure message
         uses: peter-evans/create-or-update-comment@v1
         with:
