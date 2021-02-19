@@ -24,6 +24,7 @@ jobs:
           reactions: "+1"
         if: ${{ env.PERSONAL_ACCESS_TOKEN != '' }}
   rebase:
+    if: ${{ github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') }}
     name: Rebase
     needs: check_token
     runs-on: ubuntu-latest
