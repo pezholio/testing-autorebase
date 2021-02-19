@@ -22,12 +22,9 @@ jobs:
       - name: Checkout the latest code
         uses: actions/checkout@v2
         with:
-          token: ${{ env.GITHUB_TOKEN }}
           fetch-depth: 0
       - name: Automatic Rebase
         uses: cirrus-actions/rebase@1.4
-        env:
-          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
       - name: Send failure message
         uses: peter-evans/create-or-update-comment@v1
         with:
