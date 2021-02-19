@@ -5,8 +5,20 @@ on:
 env:
   PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 jobs:
+  check_token:
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && env.PERSONAL_ACCESS_TOKEN == ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prompt user to add a token
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            To automatically rebase, you need to add a personal access token with the name `PERSONAL_ACCESS_TOKEN`
+            to the [secrets section of this repo](https://github.com/${{ github.event.repository.full_name }}/settings/secrets/actions).
+        if: ${{ failure() }}
   reaction:
-    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && env.PERSONAL_ACCESS_TOKEN != ''
     runs-on: ubuntu-latest
     steps:
       - name: Add reaction
@@ -16,7 +28,7 @@ jobs:
           reactions: "+1"
   rebase:
     name: Rebase
-    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && env.PERSONAL_ACCESS_TOKEN != ''
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the latest code
