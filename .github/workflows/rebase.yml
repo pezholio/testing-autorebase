@@ -24,7 +24,7 @@ jobs:
           reactions: "+1"
         if: ${{ env.PERSONAL_ACCESS_TOKEN != '' }}
   rebase:
-    if: ${{ github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && env.PERSONAL_ACCESS_TOKEN != '' }}
+    if: ${{ github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') }}
     name: Rebase
     needs: check_token
     runs-on: ubuntu-latest
@@ -34,10 +34,12 @@ jobs:
         with:
           token: ${{ env.PERSONAL_ACCESS_TOKEN }}
           fetch-depth: 0
+        if: ${{ env.PERSONAL_ACCESS_TOKEN != '' }}
       - name: Automatic Rebase
         uses: cirrus-actions/rebase@1.4
         env:
           GITHUB_TOKEN: ${{ env.PERSONAL_ACCESS_TOKEN }}
+        if: ${{ env.PERSONAL_ACCESS_TOKEN != '' }}
       - name: Send failure message
         uses: peter-evans/create-or-update-comment@v1
         with:
