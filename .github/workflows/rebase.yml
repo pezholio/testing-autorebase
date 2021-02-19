@@ -14,7 +14,7 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            To automatically rebase, you need to add a personal access token with the name `PERSONAL_ACCESS_TOKEN`
+            To automatically rebase, you need to add a [personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) with the name `PERSONAL_ACCESS_TOKEN`
             to the [secrets section of this repo](https://github.com/${{ github.event.repository.full_name }}/settings/secrets/actions).
         if: ${{ env.PERSONAL_ACCESS_TOKEN == '' }}
       - name: Add reaction
