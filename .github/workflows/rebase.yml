@@ -19,7 +19,13 @@ jobs:
 
             Once this is done, you can try the command again.
         if: ${{ env.PERSONAL_ACCESS_TOKEN == '' }}
-      - name: Add reaction
+      - name: Add -1 reaction
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ github.event.comment.id }}
+          reactions: "-1"
+        if: ${{ env.PERSONAL_ACCESS_TOKEN == '' }}
+      - name: Add +1 reaction
         uses: peter-evans/create-or-update-comment@v1
         with:
           comment-id: ${{ github.event.comment.id }}
