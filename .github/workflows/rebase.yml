@@ -14,10 +14,14 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
+            :no_good_man: :no_good_woman: :no_good_man: :no_good_woman: :no_good_man: :no_good_woman: :no_good_man: :no_good_woman: :no_good_man: :no_good_woman:
+
             To automatically rebase, you need to add a [personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) with the name `PERSONAL_ACCESS_TOKEN`
             to the [secrets section of this repo](https://github.com/${{ github.event.repository.full_name }}/settings/secrets/actions).
 
             Once this is done, you can try the command again.
+
+            :no_good_man: :no_good_woman: :no_good_man: :no_good_woman: :no_good_man: :no_good_woman: :no_good_man: :no_good_woman: :no_good_man: :no_good_woman:
         if: ${{ env.PERSONAL_ACCESS_TOKEN == '' }}
       - name: Add reaction
         uses: peter-evans/create-or-update-comment@v1
