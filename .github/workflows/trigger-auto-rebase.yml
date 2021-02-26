@@ -1,0 +1,19 @@
+name: Trigger auto rebase
+
+on:
+  push:
+    - master
+
+env:
+  PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+jobs:
+  trigger_auto_rebase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Auto Rebase
+        uses: dxw/trigger-action-on-automerge-prs@main
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ env.PERSONAL_ACCESS_TOKEN }}
+          REPO: pezholio/testing-autorebase
+          WORKFLOW: auto-rebase.yml
