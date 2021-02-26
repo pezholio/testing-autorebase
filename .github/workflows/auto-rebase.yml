@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
         if: ${{ env.PERSONAL_ACCESS_TOKEN != '' }}
       - name: Debug
-        run: echo cat $GITHUB_EVENT_PATH
+        run: echo cat "$GITHUB_EVENT_PATH"
       - name: Automatic Rebase
         uses: cirrus-actions/rebase@1.4
         env:
