@@ -19,6 +19,7 @@ jobs:
         with:
           token: ${{ env.PERSONAL_ACCESS_TOKEN }}
           fetch-depth: 0
+          ref: "master"
         if: ${{ env.PERSONAL_ACCESS_TOKEN != '' }}
       - name: Automatic Rebase
         uses: dxw/rebase@master
