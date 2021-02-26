@@ -16,5 +16,5 @@ jobs:
         uses: dxw/trigger-action-on-automerge-prs@main
         env:
           PERSONAL_ACCESS_TOKEN: ${{ env.PERSONAL_ACCESS_TOKEN }}
-          REPO: pezholio/testing-autorebase
-          WORKFLOW: auto-rebase.yml
+          REPO: "pezholio/testing-autorebase"
+          WORKFLOW: "auto-rebase.yml"
