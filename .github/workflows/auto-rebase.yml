@@ -30,7 +30,7 @@ jobs:
       - name: Send failure message
         uses: peter-evans/create-or-update-comment@v1
         with:
-          issue-number: ${{ github.event.issue.number }}
+          issue-number: ${{ github.event.inputs.pr_number }}
           body: |
             Automatic rebasing for this issue has failed :disappointed:
 
