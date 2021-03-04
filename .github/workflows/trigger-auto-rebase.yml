@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+# Can we set automerge as a trigger?
 
 jobs:
   trigger_auto_rebase:
@@ -11,7 +12,6 @@ jobs:
     steps:
       - name: Trigger Auto Rebase
         uses: dxw/trigger-action-on-automerge-prs@main
-        env:
-          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          REPO: "pezholio/testing-autorebase"
-          WORKFLOW: "auto-rebase.yml"
+        with:
+          personal-access-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          workflow: "auto-rebase.yml"
