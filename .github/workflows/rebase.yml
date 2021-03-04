@@ -15,7 +15,7 @@ jobs:
     steps:
       - run: echo "${{ github.event }}"
   check_token:
-    if: ${{ (github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')) || github.event.workflow_dispatch }}
+    if: ${{ (github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')) || github.event.workflow_dispatch != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Prompt user to add a token
@@ -41,7 +41,7 @@ jobs:
           reactions: "+1"
         if: ${{ env.PERSONAL_ACCESS_TOKEN != '' && github.event.comment }}
   rebase:
-    if: ${{ (github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')) || github.event.workflow_dispatch }}
+    if: ${{ (github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')) || github.event.workflow_dispatch != '' }}
     name: Rebase
     needs: check_token
     runs-on: ubuntu-latest
