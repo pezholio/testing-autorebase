@@ -4,9 +4,10 @@ on:
     types: [created]
 env:
   PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  triggered_by_comment: ${{ github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') }}
 jobs:
   check_token:
-    if: ${{ github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') }}
+    if: ${{ env.triggered_by_comment }}
     runs-on: ubuntu-latest
     steps:
       - name: Prompt user to add a token
@@ -32,7 +33,7 @@ jobs:
           reactions: "+1"
         if: ${{ env.PERSONAL_ACCESS_TOKEN != '' }}
   rebase:
-    if: ${{ github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') }}
+    if: ${{ env.triggered_by_comment }}
     name: Rebase
     needs: check_token
     runs-on: ubuntu-latest
