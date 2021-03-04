@@ -2,12 +2,16 @@ name: Automatic Rebase
 on:
   issue_comment:
     types: [created]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "PR Number"
+        required: true
 env:
   PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-  triggered_by_comment: ${{ github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') }}
 jobs:
   check_token:
-    if: ${{ env.triggered_by_comment }}
+    if: ${{ github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') }}
     runs-on: ubuntu-latest
     steps:
       - name: Prompt user to add a token
@@ -19,21 +23,21 @@ jobs:
             to the [secrets section of this repo](https://github.com/${{ github.event.repository.full_name }}/settings/secrets/actions).
 
             Once this is done, you can try the command again.
-        if: ${{ env.PERSONAL_ACCESS_TOKEN == '' }}
+        if: ${{ env.PERSONAL_ACCESS_TOKEN == ''  && github.event.comment }}
       - name: Add -1 reaction
         uses: peter-evans/create-or-update-comment@v1
         with:
           comment-id: ${{ github.event.comment.id }}
           reactions: "-1"
-        if: ${{ env.PERSONAL_ACCESS_TOKEN == '' }}
+        if: ${{ env.PERSONAL_ACCESS_TOKEN == '' && github.event.comment }}
       - name: Add +1 reaction
         uses: peter-evans/create-or-update-comment@v1
         with:
           comment-id: ${{ github.event.comment.id }}
           reactions: "+1"
-        if: ${{ env.PERSONAL_ACCESS_TOKEN != '' }}
+        if: ${{ env.PERSONAL_ACCESS_TOKEN != '' && github.event.comment }}
   rebase:
-    if: ${{ env.triggered_by_comment }}
+    if: ${{ (github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')) || github.event.workflow_dispatch }}
     name: Rebase
     needs: check_token
     runs-on: ubuntu-latest

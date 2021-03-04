@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-# Can we set automerge as a trigger?
+  pull_request
 
 jobs:
   trigger_auto_rebase:
@@ -14,4 +14,4 @@ jobs:
         uses: dxw/trigger-action-on-automerge-prs@main
         with:
           personal-access-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          workflow: "auto-rebase.yml"
+          workflow: "rebase.yml"
