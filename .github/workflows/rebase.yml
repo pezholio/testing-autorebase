@@ -11,7 +11,7 @@ env:
   PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 jobs:
   check_token:
-    if: ${{ github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') }}
+    if: ${{ github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')) || github.event.workflow_dispatch }}
     runs-on: ubuntu-latest
     steps:
       - name: Prompt user to add a token
