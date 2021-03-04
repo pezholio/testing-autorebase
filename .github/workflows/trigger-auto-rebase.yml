@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Auto Rebase
-        uses: dxw/trigger-action-on-automerge-prs@debug
+        uses: dxw/trigger-action-on-automerge-prs@main
         with:
           personal-access-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           workflow: "auto-rebase.yml"
