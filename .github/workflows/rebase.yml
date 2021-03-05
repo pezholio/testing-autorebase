@@ -54,16 +54,11 @@ jobs:
           ref: "master"
         if: ${{ env.PERSONAL_ACCESS_TOKEN != '' }}
       - name: Automatic Rebase
-        uses: cirrus-actions/rebase@1.4
-        env:
-          GITHUB_TOKEN: ${{ env.PERSONAL_ACCESS_TOKEN }}
-        if: ${{ env.PERSONAL_ACCESS_TOKEN != '' && github.event_name == 'issue_comment' }}
-      - name: Automatic Rebase
         uses: dxw/rebase@master
         env:
           GITHUB_TOKEN: ${{ env.PERSONAL_ACCESS_TOKEN }}
           PR_NUMBER: ${{ github.event.inputs.pr_number }}
-        if: ${{ env.PERSONAL_ACCESS_TOKEN != '' && github.event_name == 'workflow_dispatch' }}
+        if: ${{ env.PERSONAL_ACCESS_TOKEN != '' }}
       - name: Send failure message
         uses: peter-evans/create-or-update-comment@v1
         with:
@@ -72,4 +67,4 @@ jobs:
             Automatic rebasing for this issue has failed :disappointed:
 
             You'll have to rebase this one manually, I'm afraid.
-        if: ${{ failure() }}
+        if: ${{ failure() && github.event_name == 'issue_comment' }}
