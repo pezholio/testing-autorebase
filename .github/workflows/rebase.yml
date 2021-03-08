@@ -18,13 +18,13 @@ jobs:
       - name: Prompt user to add a token
         uses: peter-evans/create-or-update-comment@v1
         with:
-          issue-number: ${{ github.event.issue.number }}
+          issue-number: ${{ github.event.issue.number || github.event.number }}
           body: |
             To automatically rebase, you need to add a [personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) with the name `PERSONAL_ACCESS_TOKEN`
             to the [secrets section of this repo](https://github.com/${{ github.event.repository.full_name }}/settings/secrets/actions).
 
             Once this is done, you can try the command again.
-        if: ${{ env.PERSONAL_ACCESS_TOKEN == ''  && github.event.comment }}
+        if: ${{ env.PERSONAL_ACCESS_TOKEN == '' }}
       - name: Add -1 reaction
         uses: peter-evans/create-or-update-comment@v1
         with:
@@ -59,9 +59,9 @@ jobs:
       - name: Send failure message
         uses: peter-evans/create-or-update-comment@v1
         with:
-          issue-number: ${{ github.event.issue.number }}
+          issue-number: ${{ github.event.issue.number || github.event.number }}
           body: |
             Automatic rebasing for this issue has failed :disappointed:
 
             You'll have to rebase this one manually, I'm afraid.
-        if: ${{ failure() && github.event_name == 'issue_comment' }}
+        if: ${{ failure() }}
