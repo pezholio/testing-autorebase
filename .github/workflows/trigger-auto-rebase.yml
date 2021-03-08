@@ -1,7 +1,8 @@
 name: Trigger auto rebase
 
-on: pull_request_target:
-      types: [auto_merge_enabled]
+on:
+  pull_request_target:
+    types: [auto_merge_enabled]
 
 jobs:
   trigger_auto_rebase:
